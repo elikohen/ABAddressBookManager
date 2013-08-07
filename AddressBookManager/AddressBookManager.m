@@ -20,7 +20,6 @@
 @implementation NSString (Phone)
 - (NSString*)stringByCleaningPhoneNumber{
 	
-	//Stripping separators
 	NSString *clean = [self stringByReplacingOccurrencesOfString:@" " withString:@""];
 	clean = [clean stringByReplacingOccurrencesOfString:@"-" withString:@""];
 	clean = [clean stringByReplacingOccurrencesOfString:@"(" withString:@""];

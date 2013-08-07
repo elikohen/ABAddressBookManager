@@ -39,48 +39,8 @@
     self = [super init];
     if (self) {
         self.contactId = -1;
-        self.name = nil;
-        self.middleName = nil;
-        self.lastName = nil;
-        self.emails = nil;
-        self.emailsLabels = nil;
-        self.birthday = nil;
-        self.department = nil;
-        self.jobTitle = nil;
-        self.company = nil;
-        self.suffix = nil;
-        self.nickName = nil;
-        self.creationDate = nil;
-        self.modificationDate = nil;
-        self.address = nil;
-        self.addressLabels = nil;
-        self.phones = nil;
-        self.phonesLabels = nil;
-        self.image = nil;
     }
     return self;
-}
-
-- (void) dealloc{
-    
-	self.name = nil;
-  	self.middleName = nil;
-	self.lastName = nil;
-    self.emails = nil;
-    self.emailsLabels = nil;
-    self.birthday = nil;
-    self.department = nil;
-    self.jobTitle = nil;
-    self.company = nil;
-    self.suffix = nil;
-    self.nickName = nil;
-    self.creationDate = nil;
-    self.modificationDate = nil;
-    self.address = nil;
-    self.addressLabels = nil;
-	self.phones = nil;
-    self.phonesLabels = nil;
-    self.image = nil;   
 }
 
 - (UIImage*) image{
