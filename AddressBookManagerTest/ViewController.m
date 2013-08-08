@@ -46,7 +46,7 @@
 
 #pragma mark - Private methods
 - (void)loadData{
-	NSArray *contacts = [[AddressBookManager sharedObject] contacts];
+	NSArray *contacts = [[AddressBookManager sharedInstance] contacts];
 	if(!contacts || contacts.count == 0){
 		return;
 	}
@@ -127,7 +127,7 @@
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString{
 	
-	self.mFilteredContactList = [[AddressBookManager sharedObject] contactsWithQuery:searchString];
+	self.mFilteredContactList = [[AddressBookManager sharedInstance] contactsWithQuery:searchString];
 	
 	return YES;
 }

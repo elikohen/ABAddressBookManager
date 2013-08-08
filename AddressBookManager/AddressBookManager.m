@@ -87,6 +87,10 @@
 
 #pragma mark > Contacts array handling
 
+- (BOOL) isStarted{
+	return self.mContacts != nil;
+}
+
 - (NSArray*)contacts{
 	return self.mContacts;
 }
@@ -646,7 +650,7 @@
 #pragma mark -
 #pragma mark Singleton
 
-+ (AddressBookManager *)sharedObject
++ (AddressBookManager *)sharedInstance
 {
     static AddressBookManager *sharedInstance = nil;
     static dispatch_once_t onceToken;
@@ -660,6 +664,7 @@
 - (void)dealloc {
     self.delegat = nil;
 	self.mContacts = nil;
+	self.mContactsByPhone = nil;
 }
 
 @end

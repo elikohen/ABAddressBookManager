@@ -68,6 +68,11 @@ typedef enum{
 - (void)refreshContacts;
 
 /**
+ * Indicates whether contacts has been loaded or not.
+ */
+- (BOOL) isStarted;
+
+/**
  * Returns the contact list, must call 'refreshContacts' or 'retrieveContactsWithDelegate' first.
  */
 - (NSArray*) contacts;
@@ -133,6 +138,6 @@ typedef enum{
 /*
  * Get singleton instance
  */
-+ (AddressBookManager*)sharedObject;
++ (AddressBookManager*)sharedInstance;
 
 @end

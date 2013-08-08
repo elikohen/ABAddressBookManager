@@ -45,7 +45,7 @@
 
 - (UIImage*) image{
 	if(!_image){
-		[[AddressBookManager sharedObject] loadContactPhoto:self];
+		[[AddressBookManager sharedInstance] loadContactPhoto:self];
 	}
 	
 	return _image;
