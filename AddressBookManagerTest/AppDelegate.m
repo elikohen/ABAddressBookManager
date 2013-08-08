@@ -25,6 +25,9 @@
 	UINavigationController *navCtrl = [[UINavigationController alloc] initWithRootViewController:ctrl];
 	self.window.rootViewController = navCtrl;
     [self.window makeKeyAndVisible];
+	
+	[[UISearchBar appearance] setBackgroundImage:[UIImage imageNamed:@"transparent.png"]];
+	
     return YES;
 }
 

@@ -24,6 +24,8 @@
 		C7A6F97817B29499003BD1E4 /* PersonDataConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A6F97217B29499003BD1E4 /* PersonDataConverter.m */; };
 		C7A6F97917B29499003BD1E4 /* ProgressData.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A6F97417B29499003BD1E4 /* ProgressData.m */; };
 		C7A6F97B17B29511003BD1E4 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7A6F97A17B29511003BD1E4 /* AddressBook.framework */; };
+		C7C3C2B317B3A13D00339FFF /* transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = C7C3C2B117B3A13D00339FFF /* transparent.png */; };
+		C7C3C2B417B3A13D00339FFF /* transparent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7C3C2B217B3A13D00339FFF /* transparent@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -53,6 +55,8 @@
 		C7A6F97317B29499003BD1E4 /* ProgressData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressData.h; sourceTree = "<group>"; };
 		C7A6F97417B29499003BD1E4 /* ProgressData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressData.m; sourceTree = "<group>"; };
 		C7A6F97A17B29511003BD1E4 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
+		C7C3C2B117B3A13D00339FFF /* transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent.png; sourceTree = "<group>"; };
+		C7C3C2B217B3A13D00339FFF /* transparent@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "transparent@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,6 +124,8 @@
 				C7A6F94D17B292CD003BD1E4 /* InfoPlist.strings */,
 				C7A6F95017B292CD003BD1E4 /* main.m */,
 				C7A6F95217B292CD003BD1E4 /* AddressBookManagerTest-Prefix.pch */,
+				C7C3C2B117B3A13D00339FFF /* transparent.png */,
+				C7C3C2B217B3A13D00339FFF /* transparent@2x.png */,
 				C7A6F95617B292CD003BD1E4 /* Default.png */,
 				C7A6F95817B292CD003BD1E4 /* Default@2x.png */,
 				C7A6F95A17B292CD003BD1E4 /* Default-568h@2x.png */,
@@ -199,6 +205,8 @@
 				C7A6F95B17B292CD003BD1E4 /* Default-568h@2x.png in Resources */,
 				C7A6F96117B292CD003BD1E4 /* ViewController_iPhone.xib in Resources */,
 				C7A6F96417B292CD003BD1E4 /* ViewController_iPad.xib in Resources */,
+				C7C3C2B317B3A13D00339FFF /* transparent.png in Resources */,
+				C7C3C2B417B3A13D00339FFF /* transparent@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
