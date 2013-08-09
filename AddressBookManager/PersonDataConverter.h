@@ -9,12 +9,12 @@
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
 
-@class MobileContact;
+@class ABContact;
 
 @interface PersonDataConverter : NSObject{
     CFErrorRef * error;
 }
 
-- (void)convertContact:(MobileContact*)theContact toPerson:(ABRecordRef)thePerson;
+- (void)convertContact:(ABContact*)theContact toPerson:(ABRecordRef)thePerson;
 
 @end
