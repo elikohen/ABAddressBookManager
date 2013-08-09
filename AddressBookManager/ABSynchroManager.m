@@ -43,11 +43,7 @@
 	});
 }
 
-- (void) revertLastCheckpoint{
-	self.currentMetadatas = nil;
-}
-
-- (BOOL) saveLastCheckpoint{
+- (BOOL) saveLastRetrievalAsCheckpoint{
 	if(self.currentMetadatas){
 		[self saveToUserDefaults:self.currentMetadatas key:kUDSynchMetadatas];
 		return  YES;

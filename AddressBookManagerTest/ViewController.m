@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import "AddressBookManager.h"
+#import "ABSynchroManager.h"
 
 #define kHEADER_HEIGHT 20.0
 
@@ -53,6 +54,14 @@
 	
 	[self setSectionsFromList:contacts];
 	[self.tableView reloadData];
+	
+	
+	//Just to test
+	NSArray *toSynch = [[ABSynchroManager sharedInstance] addressBookModificationsSinceCheckpoint];
+	for(ABContact *contact in toSynch){
+		NSLog(@"Contact: %@ - Status: %d", contact.compositeName, contact.status);
+	}
+	[[ABSynchroManager sharedInstance] saveLastRetrievalAsCheckpoint];
 }
 
 -(void) setSectionsFromList:(NSArray *)origin{

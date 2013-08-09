@@ -13,8 +13,7 @@
 
 - (NSArray*) addressBookModificationsSinceCheckpoint;
 - (void) asyncAddressBookModificationsSinceCheckpoint: (void (^)(NSArray* result))completion;
-- (void) revertLastCheckpoint;
-- (BOOL) saveLastCheckpoint;
+- (BOOL) saveLastRetrievalAsCheckpoint;
 - (void) resetCheckpoint;
 
 @end
