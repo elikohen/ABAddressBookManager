@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C7A0A10917B508150072FAF8 /* ABContactDataConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A0A10817B508150072FAF8 /* ABContactDataConverter.m */; };
+		C7A0A10C17B510BA0072FAF8 /* ABSynchroManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A0A10B17B510BA0072FAF8 /* ABSynchroManager.m */; };
 		C7A6F94517B292CD003BD1E4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7A6F94417B292CD003BD1E4 /* UIKit.framework */; };
 		C7A6F94717B292CD003BD1E4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7A6F94617B292CD003BD1E4 /* Foundation.framework */; };
 		C7A6F94917B292CD003BD1E4 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7A6F94817B292CD003BD1E4 /* CoreGraphics.framework */; };
@@ -32,6 +33,8 @@
 /* Begin PBXFileReference section */
 		C7A0A10717B508150072FAF8 /* ABContactDataConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABContactDataConverter.h; sourceTree = "<group>"; };
 		C7A0A10817B508150072FAF8 /* ABContactDataConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABContactDataConverter.m; sourceTree = "<group>"; };
+		C7A0A10A17B510BA0072FAF8 /* ABSynchroManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABSynchroManager.h; sourceTree = "<group>"; };
+		C7A0A10B17B510BA0072FAF8 /* ABSynchroManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABSynchroManager.m; sourceTree = "<group>"; };
 		C7A6F94117B292CD003BD1E4 /* AddressBookManagerTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AddressBookManagerTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C7A6F94417B292CD003BD1E4 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		C7A6F94617B292CD003BD1E4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -141,6 +144,8 @@
 			children = (
 				C7A6F96B17B29499003BD1E4 /* AddressBookManager.h */,
 				C7A6F96C17B29499003BD1E4 /* AddressBookManager.m */,
+				C7A0A10A17B510BA0072FAF8 /* ABSynchroManager.h */,
+				C7A0A10B17B510BA0072FAF8 /* ABSynchroManager.m */,
 				C7A6F96D17B29499003BD1E4 /* ABContact.h */,
 				C7A6F96E17B29499003BD1E4 /* ABContact.m */,
 				C7A6F97117B29499003BD1E4 /* PersonDataConverter.h */,
@@ -230,6 +235,7 @@
 				C7A6F97817B29499003BD1E4 /* PersonDataConverter.m in Sources */,
 				C7A6F97917B29499003BD1E4 /* ProgressData.m in Sources */,
 				C7A0A10917B508150072FAF8 /* ABContactDataConverter.m in Sources */,
+				C7A0A10C17B510BA0072FAF8 /* ABSynchroManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -353,7 +353,7 @@
             });
         });
     } else {
-        // iOS 4/5 just access directly
+        // iOS 5 just access directly
         addressBook = AddressBookCreate;
         [self commonInitContactsWithAddressBook:addressBook];
     }

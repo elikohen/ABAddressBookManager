@@ -39,6 +39,7 @@
     self = [super init];
     if (self) {
         self.contactId = -1;
+		self.status = 0;
     }
     return self;
 }

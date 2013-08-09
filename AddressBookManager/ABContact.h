@@ -13,6 +13,12 @@ typedef enum{
 	ABContactLocaleSurnameName = 1
 }ABContactLocale;
 
+typedef enum{
+	ABContactStatusNew = 1,
+	ABContactStatusModified = 2,
+	ABContactStatusDeleted = 3
+}ABContactStatus;
+
 @interface ABContact : NSObject
 
 @property (nonatomic, assign) ABRecordID contactId;
@@ -44,6 +50,7 @@ typedef enum{
 @property (nonatomic, retain) NSArray *phones;
 @property (nonatomic, retain) NSArray *phonesLabels;
 @property (nonatomic, retain) UIImage *image;
+@property (nonatomic) ABContactStatus status;
 @property (nonatomic) ABContactLocale sortOrder;
 
 - (NSString*)fullName;
