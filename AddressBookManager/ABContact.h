@@ -1,5 +1,5 @@
 //
-//  MobileContact.h
+//  ABContact.h
 //
 //  Created by Albert Hernández on 29/11/10.
 //  Updated by Ivan on 16/5/12.
@@ -9,11 +9,11 @@
 #import <AddressBook/AddressBook.h>
 
 typedef enum{
-	MobileContactLocaleNameSurname = 0,
-	MobileContactLocaleSurnameName = 1
-}MobileContactLocale;
+	ABContactLocaleNameSurname = 0,
+	ABContactLocaleSurnameName = 1
+}ABContactLocale;
 
-@interface MobileContact : NSObject
+@interface ABContact : NSObject
 
 @property (nonatomic, assign) ABRecordID contactId;
 @property (nonatomic, retain) NSString *compositeName;
@@ -44,7 +44,7 @@ typedef enum{
 @property (nonatomic, retain) NSArray *phones;
 @property (nonatomic, retain) NSArray *phonesLabels;
 @property (nonatomic, retain) UIImage *image;
-@property (nonatomic) MobileContactLocale sortOrder;
+@property (nonatomic) ABContactLocale sortOrder;
 
 - (NSString*)fullName;
 - (NSString*)sortingName;

@@ -7,13 +7,13 @@
 //
 
 #import "PersonDataConverter.h"
-#import "MobileContact.h"
+#import "ABContact.h"
 
 @implementation PersonDataConverter
 
 #pragma mark - Public methods
 
-- (void)convertContact:(MobileContact*)theContact toPerson:(ABRecordRef)thePerson{
+- (void)convertContact:(ABContact*)theContact toPerson:(ABRecordRef)thePerson{
     
     //String properties
     if (theContact.name) {

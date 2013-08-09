@@ -1,11 +1,11 @@
 //
-//  MobileContact.m
+//  ABContact.m
 //
 //  Created by Albert Hernández on 29/11/10.
 //  Updated by Ivan on 16/5/12.
 //
 
-#import "MobileContact.h"
+#import "ABContact.h"
 #import "AddressBookManager.h"
 
 @implementation NSString (Utils)
@@ -25,13 +25,13 @@
 
 #pragma mark -
 
-@interface MobileContact ()
+@interface ABContact ()
 
 @end
 
 #pragma mark -
 
-@implementation MobileContact
+@implementation ABContact
 
 #pragma mark - Object lifecycle
 
@@ -63,10 +63,10 @@
 
 - (NSString*)sortingName{
 	NSString *sortingName = [self fullName];
-	if(self.sortOrder == MobileContactLocaleNameSurname && [sortingName contains: self.name options:NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch]){
+	if(self.sortOrder == ABContactLocaleNameSurname && [sortingName contains: self.name options:NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch]){
 		sortingName = self.name;
 	}
-	else if(self.sortOrder == MobileContactLocaleSurnameName && [sortingName contains: self.lastName options:NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch]){
+	else if(self.sortOrder == ABContactLocaleSurnameName && [sortingName contains: self.lastName options:NSCaseInsensitiveSearch|NSDiacriticInsensitiveSearch]){
 		sortingName = self.lastName;
 	}
 	return sortingName;
@@ -83,7 +83,7 @@
 	return @"#";
 }
 
-- (NSComparisonResult)compare:(MobileContact *)otherObject {
+- (NSComparisonResult)compare:(ABContact *)otherObject {
 	
 	NSString *myName = [self indexCharacter];
 	NSString *otherName = [otherObject indexCharacter];

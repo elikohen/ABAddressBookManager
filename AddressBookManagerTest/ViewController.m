@@ -63,7 +63,7 @@
     //Creating sections
     NSMutableArray * sectionArray = nil;
     NSString* lastSection = nil;
-    for(MobileContact * contact in origin){
+    for(ABContact * contact in origin){
         NSString * text = [contact indexCharacter];
         if([text length] == 0){
             NSLog(@"[Warning] empty complete name here ?!?!");
@@ -93,7 +93,7 @@
 }
 
 
-- (UITableViewCell*)createContactsCell:(MobileContact*) contact{
+- (UITableViewCell*)createContactsCell:(ABContact*) contact{
 	static NSString *cellIdentifier = @"ContactsCell";
 	
 	UITableViewCell *cell =[self.tableView dequeueReusableCellWithIdentifier:cellIdentifier];
@@ -176,7 +176,7 @@
 	}
 	
 	if(!arrayOfContacts) return nil;
-	MobileContact *contact = [arrayOfContacts objectAtIndex:indexPath.row];
+	ABContact *contact = [arrayOfContacts objectAtIndex:indexPath.row];
 	return [self createContactsCell:contact];
 }
 

@@ -20,7 +20,7 @@
 		C7A6F96117B292CD003BD1E4 /* ViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7A6F95F17B292CD003BD1E4 /* ViewController_iPhone.xib */; };
 		C7A6F96417B292CD003BD1E4 /* ViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = C7A6F96217B292CD003BD1E4 /* ViewController_iPad.xib */; };
 		C7A6F97517B29499003BD1E4 /* AddressBookManager.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A6F96C17B29499003BD1E4 /* AddressBookManager.m */; };
-		C7A6F97617B29499003BD1E4 /* MobileContact.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A6F96E17B29499003BD1E4 /* MobileContact.m */; };
+		C7A6F97617B29499003BD1E4 /* ABContact.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A6F96E17B29499003BD1E4 /* ABContact.m */; };
 		C7A6F97817B29499003BD1E4 /* PersonDataConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A6F97217B29499003BD1E4 /* PersonDataConverter.m */; };
 		C7A6F97917B29499003BD1E4 /* ProgressData.m in Sources */ = {isa = PBXBuildFile; fileRef = C7A6F97417B29499003BD1E4 /* ProgressData.m */; };
 		C7A6F97B17B29511003BD1E4 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7A6F97A17B29511003BD1E4 /* AddressBook.framework */; };
@@ -48,8 +48,8 @@
 		C7A6F96317B292CD003BD1E4 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController_iPad.xib; sourceTree = "<group>"; };
 		C7A6F96B17B29499003BD1E4 /* AddressBookManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddressBookManager.h; sourceTree = "<group>"; };
 		C7A6F96C17B29499003BD1E4 /* AddressBookManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddressBookManager.m; sourceTree = "<group>"; };
-		C7A6F96D17B29499003BD1E4 /* MobileContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileContact.h; sourceTree = "<group>"; };
-		C7A6F96E17B29499003BD1E4 /* MobileContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileContact.m; sourceTree = "<group>"; };
+		C7A6F96D17B29499003BD1E4 /* ABContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ABContact.h; sourceTree = "<group>"; };
+		C7A6F96E17B29499003BD1E4 /* ABContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ABContact.m; sourceTree = "<group>"; };
 		C7A6F97117B29499003BD1E4 /* PersonDataConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PersonDataConverter.h; sourceTree = "<group>"; };
 		C7A6F97217B29499003BD1E4 /* PersonDataConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PersonDataConverter.m; sourceTree = "<group>"; };
 		C7A6F97317B29499003BD1E4 /* ProgressData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressData.h; sourceTree = "<group>"; };
@@ -138,8 +138,8 @@
 			children = (
 				C7A6F96B17B29499003BD1E4 /* AddressBookManager.h */,
 				C7A6F96C17B29499003BD1E4 /* AddressBookManager.m */,
-				C7A6F96D17B29499003BD1E4 /* MobileContact.h */,
-				C7A6F96E17B29499003BD1E4 /* MobileContact.m */,
+				C7A6F96D17B29499003BD1E4 /* ABContact.h */,
+				C7A6F96E17B29499003BD1E4 /* ABContact.m */,
 				C7A6F97117B29499003BD1E4 /* PersonDataConverter.h */,
 				C7A6F97217B29499003BD1E4 /* PersonDataConverter.m */,
 				C7A6F97317B29499003BD1E4 /* ProgressData.h */,
@@ -221,7 +221,7 @@
 				C7A6F95517B292CD003BD1E4 /* AppDelegate.m in Sources */,
 				C7A6F95E17B292CD003BD1E4 /* ViewController.m in Sources */,
 				C7A6F97517B29499003BD1E4 /* AddressBookManager.m in Sources */,
-				C7A6F97617B29499003BD1E4 /* MobileContact.m in Sources */,
+				C7A6F97617B29499003BD1E4 /* ABContact.m in Sources */,
 				C7A6F97817B29499003BD1E4 /* PersonDataConverter.m in Sources */,
 				C7A6F97917B29499003BD1E4 /* ProgressData.m in Sources */,
 			);

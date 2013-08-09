@@ -11,12 +11,12 @@
  */
 
 #import <UIKit/UIKit.h>
-#import "MobileContact.h"
+#import "ABContact.h"
 
 #define kNotificationAddressBookManagerUpdated @"kNotificationAddressBookManagerUpdated"
 #define kNotificationAddressBookManagerNoPermission @"kNotificationAddressBookManagerNoPermission"
 
-@class MobileContacts;
+@class ABContacts;
 @class ProgressData;
 
 typedef enum{
@@ -85,7 +85,7 @@ typedef enum{
 /**
  * Returns the contact that matches the phone number, must call 'refreshContacts' or 'retrieveContactsWithDelegate' first.
  */
-- (MobileContact*) contactByPhoneNumber: (NSString*) phoneNumber;
+- (ABContact*) contactByPhoneNumber: (NSString*) phoneNumber;
 
 /**
  * Returns whether or not we have access to the contacts programatically.
@@ -107,28 +107,28 @@ typedef enum{
 /*
  * Reads contact photo and stores/updates it in the contact
  */
-- (BOOL)loadContactPhoto:(MobileContact*)contact;
+- (BOOL)loadContactPhoto:(ABContact*)contact;
 
 /*
  *  Insert new contact on native addressbook.
  *  @param theContact contact to add.
- *  @return result YES means ok & MobileContact object updated.
+ *  @return result YES means ok & ABContact object updated.
  */
-- (BOOL) insertContact:(MobileContact*)theContact;
+- (BOOL) insertContact:(ABContact*)theContact;
 
 /*
  *  Modify an existing contact on native addressbook.
  *  @param theContact contact to modify.
- *  @return result YES means ok & MobileContact object updated.
+ *  @return result YES means ok & ABContact object updated.
  */
-- (BOOL) modifyContact:(MobileContact*)theContact;
+- (BOOL) modifyContact:(ABContact*)theContact;
 
 /*
  *  Remove contact on native addressbook
  *  @param theContact contact to remove.
  *  @return result YES means ok.
  */
-- (BOOL) removeContact:(MobileContact*)theContact;
+- (BOOL) removeContact:(ABContact*)theContact;
 
 /*
  *  Remove all contacts on native addressbook.

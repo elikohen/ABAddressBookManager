@@ -9,7 +9,7 @@
 
 #import <AddressBook/AddressBook.h>
 #import "AddressBookManager.h"
-#import "MobileContact.h"
+#import "ABContact.h"
 #import "ProgressData.h"
 #import "PersonDataConverter.h"
 
@@ -99,7 +99,7 @@
 	NSMutableArray *result = [[NSMutableArray alloc] init];
 	
 	NSArray *queryStrings = [query componentsSeparatedByString:@" "];
-	for (MobileContact * contact in self.mContacts){
+	for (ABContact * contact in self.mContacts){
 		BOOL matches = YES;
 		for(NSString *partQuery in queryStrings){
 			if(!partQuery || partQuery.length == 0){
@@ -119,8 +119,8 @@
 	return result;
 }
 
-- (MobileContact*) contactByPhoneNumber: (NSString*) phoneNumber{
-	MobileContact *contact = [self.mContactsByPhone objectForKey:[phoneNumber stringByCleaningPhoneNumber]];
+- (ABContact*) contactByPhoneNumber: (NSString*) phoneNumber{
+	ABContact *contact = [self.mContactsByPhone objectForKey:[phoneNumber stringByCleaningPhoneNumber]];
 	return contact;
 }
 
@@ -134,7 +134,7 @@
 
 #pragma mark > ABAddressBook modifications
 
-- (BOOL)loadContactPhoto:(MobileContact*)contact{
+- (BOOL)loadContactPhoto:(ABContact*)contact{
 	ABAddressBookRef addressbook = AddressBookCreate;
     
     ABRecordRef abItem = ABAddressBookGetPersonWithRecordID(addressbook, contact.contactId);
@@ -158,7 +158,7 @@
 	return NO;
 }
 
--(BOOL) insertContact:(MobileContact*)theContact{
+-(BOOL) insertContact:(ABContact*)theContact{
 
     if(!theContact){
         NSLog(@"[WARNING] insertContact: nil contact!");
@@ -197,7 +197,7 @@
     
     ABRecordID uid = ABRecordGetRecordID(abItem);
     
-    [self copyPropertiesOfPerson:abItem toMobileContact:theContact];
+    [self copyPropertiesOfPerson:abItem toABContact:theContact];
     
     NSLog(@"insertItem: Success for item with key %d", uid);
     
@@ -208,7 +208,7 @@
     
 }
 
--(BOOL) modifyContact:(MobileContact*)theContact{
+-(BOOL) modifyContact:(ABContact*)theContact{
     
     if(!theContact){
         NSLog(@"[WARNING] modifyItem: nil contact!");
@@ -239,14 +239,14 @@
     
     ABRecordID uid = ABRecordGetRecordID(abItem);
     
-    [self copyPropertiesOfPerson:abItem toMobileContact:theContact];
+    [self copyPropertiesOfPerson:abItem toABContact:theContact];
     
     NSLog(@"modifyItem: Success for item with key %d", uid);
     CFRelease(addressbook);
     return YES;
 }
 
--(BOOL) removeContact:(MobileContact*)theContact{
+-(BOOL) removeContact:(ABContact*)theContact{
     
     if(!theContact){
         NSLog(@"[WARNING] removeContact: nil contact!");
@@ -420,18 +420,18 @@
 		
 		[contactsSet addObject:(__bridge id)(person)];
 		
-		MobileContact *contact = [[MobileContact alloc] init];
-		contact.sortOrder = (MobileContactLocale)mSortOrdering;
-        [self copyPropertiesOfPerson:person toMobileContact:contact];
+		ABContact *contact = [[ABContact alloc] init];
+		contact.sortOrder = (ABContactLocale)mSortOrdering;
+        [self copyPropertiesOfPerson:person toABContact:contact];
 		
-		//Merging all linked contacts into same MobileContact
+		//Merging all linked contacts into same ABContact
 		CFArrayRef linkedRef = ABPersonCopyArrayOfAllLinkedPeople(person);
 		for (CFIndex lidx = 0; lidx < CFArrayGetCount(linkedRef); lidx++){
 			ABRecordRef userLinked = CFArrayGetValueAtIndex(linkedRef, lidx);
 			if([contactsSet containsObject:(__bridge id)(userLinked)]){
 				continue;
 			}
-			[self addValuesOfPerson:userLinked toMobileContact:contact];
+			[self addValuesOfPerson:userLinked toABContact:contact];
 		}
 		NSArray *linked = CFBridgingRelease(linkedRef);
 		[contactsSet addObjectsFromArray:linked];
@@ -467,7 +467,7 @@
 }
 
 
-- (void)retrieveEmailsAndEmailsLabelsForContact:(MobileContact*)contact withABRecordRef:(ABRecordRef)person{
+- (void)retrieveEmailsAndEmailsLabelsForContact:(ABContact*)contact withABRecordRef:(ABRecordRef)person{
     
 	NSMutableArray *emailsArr = [[NSMutableArray alloc] init];
 	NSMutableArray *emailsLabelsArr = [[NSMutableArray alloc] init];
@@ -481,7 +481,7 @@
 	contact.emailsLabels = emailsLabelsArr;
 }
 
-- (void)addEmailsAndEmailsLabelsForContact:(MobileContact*)contact withABRecordRef:(ABRecordRef)person{
+- (void)addEmailsAndEmailsLabelsForContact:(ABContact*)contact withABRecordRef:(ABRecordRef)person{
     
 	NSMutableArray *emailsArr = [[NSMutableArray alloc] initWithArray:contact.emails];
 	NSMutableArray *emailsLabelsArr = [[NSMutableArray alloc] initWithArray:contact.emailsLabels];
@@ -495,7 +495,7 @@
 	contact.emailsLabels = emailsLabelsArr;
 }
 
-- (void)retrievePhonesAndPhoneLabelsForContact:(MobileContact*)contact withABRecordRef:(ABRecordRef)person{
+- (void)retrievePhonesAndPhoneLabelsForContact:(ABContact*)contact withABRecordRef:(ABRecordRef)person{
     
 	NSMutableArray *phonesArr = [[NSMutableArray alloc] init];
 	NSMutableArray *phonesLabelsArr = [[NSMutableArray alloc] init];
@@ -509,7 +509,7 @@
 	contact.phonesLabels = phonesLabelsArr;
 }
 
-- (void)addPhonesAndPhoneLabelsForContact:(MobileContact*)contact withABRecordRef:(ABRecordRef)person{
+- (void)addPhonesAndPhoneLabelsForContact:(ABContact*)contact withABRecordRef:(ABRecordRef)person{
     
 	NSMutableArray *phonesArr = [[NSMutableArray alloc] initWithArray:contact.phones];
 	NSMutableArray *phonesLabelsArr = [[NSMutableArray alloc] initWithArray:contact.phonesLabels];
@@ -523,7 +523,7 @@
 	contact.phonesLabels = phonesLabelsArr;
 }
 
-- (void)retrieveAddressAndAddressLabelsForContact:(MobileContact*)contact withABRecordRef:(ABRecordRef)person{
+- (void)retrieveAddressAndAddressLabelsForContact:(ABContact*)contact withABRecordRef:(ABRecordRef)person{
 
     NSMutableArray *addressArr = [[NSMutableArray alloc] init];
 	NSMutableArray *addressLabelsArr = [[NSMutableArray alloc] init];
@@ -538,7 +538,7 @@
     
 }
 
-- (void)addAddressAndAddressLabelsForContact:(MobileContact*)contact withABRecordRef:(ABRecordRef)person{
+- (void)addAddressAndAddressLabelsForContact:(ABContact*)contact withABRecordRef:(ABRecordRef)person{
 	
     NSMutableArray *addressArr = [[NSMutableArray alloc] initWithArray:contact.address];
 	NSMutableArray *addressLabelsArr = [[NSMutableArray alloc] initWithArray:contact.addressLabels];
@@ -579,7 +579,7 @@
 
 #pragma mark > ABAddressBook modifications
 
-- (void)copyPropertiesOfPerson:(ABRecordRef)person toMobileContact:(MobileContact*)contact{
+- (void)copyPropertiesOfPerson:(ABRecordRef)person toABContact:(ABContact*)contact{
     
     //read direct properties from person
 	NSString *compositeName = ( NSString*)CFBridgingRelease(ABRecordCopyCompositeName(person));
@@ -640,7 +640,7 @@
 	modificationDate = nil;
 }
 
-- (void)addValuesOfPerson:(ABRecordRef)person toMobileContact:(MobileContact*)contact{
+- (void)addValuesOfPerson:(ABRecordRef)person toABContact:(ABContact*)contact{
 	//read multi-value properties
     [self addEmailsAndEmailsLabelsForContact:contact withABRecordRef:person];
     [self addAddressAndAddressLabelsForContact:contact withABRecordRef:person];
