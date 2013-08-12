@@ -8,7 +8,7 @@
 #import "ABContact.h"
 #import "AddressBookManager.h"
 
-@implementation NSString (Utils)
+@implementation NSString (ABM)
 
 - (BOOL)contains: (NSString*) another{
 	return [self contains:another options:0];

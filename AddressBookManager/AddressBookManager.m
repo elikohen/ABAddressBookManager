@@ -18,7 +18,7 @@
 
 #define AddressBookCreate OLD_ADB ? ABAddressBookCreate() : ABAddressBookCreateWithOptions(NULL, NULL);
 
-@implementation NSString (Phone)
+@implementation NSString (ABM)
 - (NSString*)stringByCleaningPhoneNumber{
 	
 	NSString *clean = [self stringByReplacingOccurrencesOfString:@" " withString:@""];
