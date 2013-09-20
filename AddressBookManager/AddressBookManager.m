@@ -343,6 +343,8 @@
             // callback can occur in background, address book must be accessed on thread it was created on
             dispatch_async(currentQueue, ^{
                 if(error || !granted){
+					self.mContacts = [NSArray array];
+					self.mContactsByPhone = [NSDictionary dictionary];
                     ios6AdbPermission = NO;
                     //Just call the delegate
                     [self performSelectorOnMainThread:@selector(contactsPermissionDenied) withObject:nil waitUntilDone:NO];
