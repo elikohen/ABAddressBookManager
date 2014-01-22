@@ -14,24 +14,26 @@
 #import "PersonDataConverter.h"
 #import "ABContactDataConverter.h"
 
-#define OLD_ADB (&ABAddressBookCreateWithOptions == NULL)
-
-#define AddressBookCreate OLD_ADB ? ABAddressBookCreate() : ABAddressBookCreateWithOptions(NULL, NULL);
+#define AddressBookCreate ABAddressBookCreateWithOptions(NULL, NULL)
 
 @implementation NSString (ABM)
-- (NSString*)stringByCleaningPhoneNumber{
+- (NSString*)stringByCleaningPhoneNumber: (NSString*) countryPrefix{
 	
 	NSString *clean = [self stringByReplacingOccurrencesOfString:@" " withString:@""];
+	clean = [clean stringByReplacingOccurrencesOfString:@"\u00a0" withString:@""];
+	clean = [clean stringByReplacingOccurrencesOfString:@" " withString:@""];
 	clean = [clean stringByReplacingOccurrencesOfString:@"-" withString:@""];
 	clean = [clean stringByReplacingOccurrencesOfString:@"(" withString:@""];
 	clean = [clean stringByReplacingOccurrencesOfString:@")" withString:@""];
 	clean = [clean stringByReplacingOccurrencesOfString:@"." withString:@""];
 	clean = [clean stringByReplacingOccurrencesOfString:@"+" withString:@"00"];
-	if (clean && clean.length > 0){
-		return clean;
+	if(countryPrefix){
+		NSString *totalPrefix = [NSString stringWithFormat:@"00%@", countryPrefix];
+		if([clean hasPrefix:totalPrefix]){
+			clean = [clean substringFromIndex:totalPrefix.length];
+		}
 	}
-	
-	return [self copy];
+	return clean;
 }
 @end
 
@@ -65,8 +67,52 @@
     return self;
 }
 
-#pragma mark -
-#pragma mark Public methods
+#pragma mark - Static methods
+
++ (void)showAddContactOnViewController: (UIViewController<ABNewPersonViewControllerDelegate>*) ctrl withPhoneNumber: (NSString*) phoneNumber {
+    // Creating new entry
+    ABRecordRef person = ABPersonCreate();
+	
+    // Adding phone numbers
+	if(phoneNumber){
+		ABMutableMultiValueRef phoneNumberMultiValue = ABMultiValueCreateMutable(kABMultiStringPropertyType);
+		ABMultiValueAddValueAndLabel(phoneNumberMultiValue, CFBridgingRetain(phoneNumber), kABPersonPhoneMainLabel, NULL);
+		ABRecordSetValue(person, kABPersonPhoneProperty, phoneNumberMultiValue, nil);
+		CFRelease(phoneNumberMultiValue);
+	}
+	
+    // Creating view controller for a new contact
+    ABNewPersonViewController *c = [[ABNewPersonViewController alloc] init];
+    [c setNewPersonViewDelegate:ctrl];
+    [c setDisplayedPerson:person];
+    CFRelease(person);
+	UINavigationController *navCtrl = [[UINavigationController alloc] initWithRootViewController:c];
+    [ctrl.navigationController presentViewController:navCtrl animated:YES completion:nil];
+}
+
+- (void)showContactOnViewController: (UIViewController*) ctrl withPhoneNumber: (ABContact*) theContact {
+	
+	if(!theContact){
+        NSLog(@"[WARNING] modifyItem: nil contact!");
+        return;
+    }
+	
+    ABAddressBookRef addressbook = AddressBookCreate;
+    
+    ABRecordRef person = ABAddressBookGetPersonWithRecordID(addressbook, theContact.contactId);
+	
+    // Creating view controller for a new contact
+    ABPersonViewController *c = [[ABPersonViewController alloc] init];
+    [c setDisplayedPerson:person];
+	[c setAddressBook:addressbook];
+	[c setAllowsEditing:NO];
+    CFRelease(person);
+	CFRelease(addressbook);
+	UINavigationController *navCtrl = [[UINavigationController alloc] initWithRootViewController:c];
+    [ctrl.navigationController presentViewController:navCtrl animated:YES completion:nil];
+}
+
+#pragma mark - Public methods
 
 #pragma mark > Queries
 
@@ -121,7 +167,7 @@
 }
 
 - (ABContact*) contactByPhoneNumber: (NSString*) phoneNumber{
-	ABContact *contact = [self.mContactsByPhone objectForKey:[phoneNumber stringByCleaningPhoneNumber]];
+	ABContact *contact = [self.mContactsByPhone objectForKey:[phoneNumber stringByCleaningPhoneNumber:self.internationalCountryPrefix]];
 	return contact;
 }
 
@@ -343,8 +389,6 @@
             // callback can occur in background, address book must be accessed on thread it was created on
             dispatch_async(currentQueue, ^{
                 if(error || !granted){
-					self.mContacts = [NSArray array];
-					self.mContactsByPhone = [NSDictionary dictionary];
                     ios6AdbPermission = NO;
                     //Just call the delegate
                     [self performSelectorOnMainThread:@selector(contactsPermissionDenied) withObject:nil waitUntilDone:NO];
@@ -429,7 +473,10 @@
 		
 		//Contacts by phone Dictionary
 		for(NSString *phone in contact.phones){
-			[theContactsByPhone setObject:contact forKey:[phone stringByCleaningPhoneNumber]];
+			NSString *cleanedPhone = [phone stringByCleaningPhoneNumber:self.internationalCountryPrefix];
+			if(cleanedPhone && cleanedPhone.length > 0 && ![theContactsByPhone objectForKey:cleanedPhone]){
+				[theContactsByPhone setObject:contact forKey:cleanedPhone];
+			}
 		}
 		
 		

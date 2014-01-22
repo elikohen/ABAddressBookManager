@@ -11,6 +11,7 @@
  */
 
 #import <UIKit/UIKit.h>
+#import <AddressBookUI/AddressBookUI.h>
 #import "ABContact.h"
 
 #define kNotificationAddressBookManagerUpdated @"kNotificationAddressBookManagerUpdated"
@@ -43,6 +44,12 @@ typedef enum{
 @interface AddressBookManager : NSObject
 
 /**
+ * Optional property to do a better filtering of phones. That prefix will be removed to all phones on the 
+ * local hash, so that when querying for a number without internatioal prefix it will be correctly matched.
+ */
+@property (nonatomic, strong) NSString *internationalCountryPrefix;
+
+/**
  *  Configuration parameter. If true, contact photo is skipped (so read process is faster)
  */
 @property (nonatomic) BOOL readPhotos;
@@ -56,6 +63,13 @@ typedef enum{
  *  Contacts read process delegate
  */
 @property (nonatomic, weak) NSObject<AddressBookManagerDelegate> *delegat;
+
+
+/**
+ * Presents a new ABNewPersonViewController over ctrl using phoneNumber to fill kABPersonPhoneMainLabel label
+ */
++ (void)showAddContactOnViewController: (UIViewController<ABNewPersonViewControllerDelegate>*) ctrl withPhoneNumber: (NSString*) phoneNumber;
+- (void)showContactOnViewController: (UIViewController*) ctrl withPhoneNumber: (ABContact*) theContact;
 
 /*
  * This method reads all contacts stored on iPhone AddressBook. Asynch method.
