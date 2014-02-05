@@ -69,7 +69,7 @@ typedef enum{
  * Presents a new ABNewPersonViewController over ctrl using phoneNumber to fill kABPersonPhoneMainLabel label
  */
 + (void)showAddContactOnViewController: (UIViewController<ABNewPersonViewControllerDelegate>*) ctrl withPhoneNumber: (NSString*) phoneNumber;
-- (void)showContactOnViewController: (UIViewController*) ctrl withPhoneNumber: (ABContact*) theContact;
+- (void)showContact: (ABContact*) theContact onViewController: (UIViewController<ABPersonViewControllerDelegate> *) ctrl allowingEdition:(BOOL) allowEdition;
 
 /*
  * This method reads all contacts stored on iPhone AddressBook. Asynch method.

@@ -28,6 +28,7 @@
 		C7A6F97B17B29511003BD1E4 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7A6F97A17B29511003BD1E4 /* AddressBook.framework */; };
 		C7C3C2B317B3A13D00339FFF /* transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = C7C3C2B117B3A13D00339FFF /* transparent.png */; };
 		C7C3C2B417B3A13D00339FFF /* transparent@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C7C3C2B217B3A13D00339FFF /* transparent@2x.png */; };
+		C7C6D15318A262B2006EAF27 /* AddressBookUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C7C6D15218A262B2006EAF27 /* AddressBookUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,7 @@
 		C7A6F97A17B29511003BD1E4 /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = System/Library/Frameworks/AddressBook.framework; sourceTree = SDKROOT; };
 		C7C3C2B117B3A13D00339FFF /* transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = transparent.png; sourceTree = "<group>"; };
 		C7C3C2B217B3A13D00339FFF /* transparent@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "transparent@2x.png"; sourceTree = "<group>"; };
+		C7C6D15218A262B2006EAF27 /* AddressBookUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBookUI.framework; path = System/Library/Frameworks/AddressBookUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C7C6D15318A262B2006EAF27 /* AddressBookUI.framework in Frameworks */,
 				C7A6F97B17B29511003BD1E4 /* AddressBook.framework in Frameworks */,
 				C7A6F94517B292CD003BD1E4 /* UIKit.framework in Frameworks */,
 				C7A6F94717B292CD003BD1E4 /* Foundation.framework in Frameworks */,
@@ -101,6 +104,7 @@
 		C7A6F94317B292CD003BD1E4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C7C6D15218A262B2006EAF27 /* AddressBookUI.framework */,
 				C7A6F97A17B29511003BD1E4 /* AddressBook.framework */,
 				C7A6F94417B292CD003BD1E4 /* UIKit.framework */,
 				C7A6F94617B292CD003BD1E4 /* Foundation.framework */,

@@ -29,8 +29,11 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
 	
+	UIBarButtonItem *addContact = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(showAddContact)];
+	self.navigationItem.rightBarButtonItem = addContact;
+	
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(loadData) name:kNotificationAddressBookManagerUpdated object:nil];
-	//[[AddressBookManager sharedObject] refreshContacts]; <- Done on applicationDidBecomeActive
+	//[[AddressBookManager sharedInstance] refreshContacts]; <- Done on applicationDidBecomeActive
 	[self loadData];
 }
 
@@ -46,6 +49,10 @@
 }
 
 #pragma mark - Private methods
+- (void) showAddContact{
+	[AddressBookManager showAddContactOnViewController:self withPhoneNumber:nil];
+}
+
 - (void)loadData{
 	NSArray *contacts = [[AddressBookManager sharedInstance] contacts];
 	if(!contacts || contacts.count == 0){
@@ -132,6 +139,35 @@
 	return cell;
 }
 
+- (ABContact*) contactFromTableView:(UITableView*) tableView andIndexPath: (NSIndexPath*) indexPath{
+	NSArray *arrayOfContacts = nil;
+	if(tableView == self.tableView){
+		if(!self.mContactList) return nil;
+		arrayOfContacts = [self.mContactList objectAtIndex:indexPath.section];
+	}
+	else{
+		arrayOfContacts = self.mFilteredContactList;
+	}
+	
+	if(!arrayOfContacts) return nil;
+	ABContact *contact = [arrayOfContacts objectAtIndex:indexPath.row];
+	return contact;
+}
+
+
+#pragma mark - ABNewPersonViewControllerDelegate
+- (void)newPersonViewController:(ABNewPersonViewController *)newPersonView didCompleteWithNewPerson:(ABRecordRef)person{
+	if(person){
+		[[AddressBookManager sharedInstance] refreshContacts];
+	}
+	[newPersonView dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - ABPersonViewControllerDelegate
+- (BOOL)personViewController:(ABPersonViewController *)personViewController shouldPerformDefaultActionForPerson:(ABRecordRef)person property:(ABPropertyID)property identifier:(ABMultiValueIdentifier)identifier{
+	return YES;
+}
+
 #pragma mark - UISearchDisplayDelegate
 
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString{
@@ -175,17 +211,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-	NSArray *arrayOfContacts = nil;
-	if(tableView == self.tableView){
-		if(!self.mContactList) return nil;
-		arrayOfContacts = [self.mContactList objectAtIndex:indexPath.section];
-	}
-	else{
-		arrayOfContacts = self.mFilteredContactList;
-	}
-	
-	if(!arrayOfContacts) return nil;
-	ABContact *contact = [arrayOfContacts objectAtIndex:indexPath.row];
+	ABContact *contact = [self contactFromTableView:tableView andIndexPath:indexPath];
 	return [self createContactsCell:contact];
 }
 
@@ -212,5 +238,11 @@
 	return 0;
 }
 
+#pragma mark - UITableViewDelegate
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+	ABContact *contact = [self contactFromTableView:tableView andIndexPath:indexPath];
+	
+	[[AddressBookManager sharedInstance] showContact:contact onViewController:self allowingEdition:NO];
+}
 
 @end

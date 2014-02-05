@@ -39,8 +39,11 @@
 
 @interface AddressBookManager (){
     BOOL ios6AdbPermission;
+	BOOL loadingContacts;
 	ABPersonSortOrdering mSortOrdering;
 	ABPersonCompositeNameFormat mCompositeNameFormat;
+	
+	ABAddressBookRef mShowContactAddressBook;
 }
 /*
  *  Current contacts list readed.
@@ -76,7 +79,7 @@
     // Adding phone numbers
 	if(phoneNumber){
 		ABMutableMultiValueRef phoneNumberMultiValue = ABMultiValueCreateMutable(kABMultiStringPropertyType);
-		ABMultiValueAddValueAndLabel(phoneNumberMultiValue, CFBridgingRetain(phoneNumber), kABPersonPhoneMainLabel, NULL);
+		ABMultiValueAddValueAndLabel(phoneNumberMultiValue, (__bridge CFStringRef) phoneNumber, kABPersonPhoneMainLabel, NULL);
 		ABRecordSetValue(person, kABPersonPhoneProperty, phoneNumberMultiValue, nil);
 		CFRelease(phoneNumberMultiValue);
 	}
@@ -87,13 +90,13 @@
     [c setDisplayedPerson:person];
     CFRelease(person);
 	UINavigationController *navCtrl = [[UINavigationController alloc] initWithRootViewController:c];
-    [ctrl.navigationController presentViewController:navCtrl animated:YES completion:nil];
+    [ctrl presentViewController:navCtrl animated:YES completion:nil];
 }
 
-- (void)showContactOnViewController: (UIViewController*) ctrl withPhoneNumber: (ABContact*) theContact {
+- (void)showContact: (ABContact*) theContact onViewController: (UIViewController<ABPersonViewControllerDelegate> *) ctrl allowingEdition:(BOOL) allowEdition {
 	
 	if(!theContact){
-        NSLog(@"[WARNING] modifyItem: nil contact!");
+        NSLog(@"[WARNING] showContact: nil contact!");
         return;
     }
 	
@@ -105,14 +108,29 @@
     ABPersonViewController *c = [[ABPersonViewController alloc] init];
     [c setDisplayedPerson:person];
 	[c setAddressBook:addressbook];
-	[c setAllowsEditing:NO];
-    CFRelease(person);
+	[c setAllowsEditing:allowEdition];
+	[c setPersonViewDelegate:ctrl];
 	CFRelease(addressbook);
-	UINavigationController *navCtrl = [[UINavigationController alloc] initWithRootViewController:c];
-    [ctrl.navigationController presentViewController:navCtrl animated:YES completion:nil];
+	if(ctrl.navigationController){
+		[ctrl.navigationController pushViewController:c animated:YES];
+	}
+	else{
+		UINavigationController *navCtrl = [[UINavigationController alloc] initWithRootViewController:c];
+		[ctrl presentViewController:navCtrl animated:YES completion:nil];
+	}
 }
 
 #pragma mark - Public methods
+
+- (void) setInternationalCountryPrefix:(NSString*) prefix{
+	BOOL reload = (!_internationalCountryPrefix || (_internationalCountryPrefix && !prefix) || ![_internationalCountryPrefix isEqualToString:prefix]);
+
+	_internationalCountryPrefix = prefix;
+	
+	if(reload){
+		[self refreshContacts];
+	}
+}
 
 #pragma mark > Queries
 
@@ -120,11 +138,20 @@
 	if (self){
 		self.delegat = aDelegate;
 		
+		@synchronized(self){
+			if(loadingContacts) return;
+			loadingContacts = YES;
+		}
+		
 		[NSThread detachNewThreadSelector:@selector(initContacts) toTarget:self withObject:nil];
 	}
 }
 
 - (void)refreshContacts{
+	@synchronized(self){
+		if(loadingContacts) return;
+		loadingContacts = YES;
+	}
 	[NSThread detachNewThreadSelector:@selector(initContacts) toTarget:self withObject:nil];
 }
 
@@ -389,6 +416,7 @@
             // callback can occur in background, address book must be accessed on thread it was created on
             dispatch_async(currentQueue, ^{
                 if(error || !granted){
+					CFRelease(addressBook);
                     ios6AdbPermission = NO;
                     //Just call the delegate
                     [self performSelectorOnMainThread:@selector(contactsPermissionDenied) withObject:nil waitUntilDone:NO];
@@ -412,7 +440,7 @@
 - (void) commonInitContactsWithAddressBook: (ABAddressBookRef) addressBook{
 	
 	// Iterate the array of all contacts and add to our data structure
-	CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);	// ahl: it makes a shallow copy, doesn't need to release it again
+	CFArrayRef people = ABAddressBookCopyArrayOfAllPeople(addressBook);
 	
 	// Init
 	NSMutableArray *theContacts = [[NSMutableArray alloc] initWithCapacity:CFArrayGetCount(people)];
@@ -489,6 +517,10 @@
 	
 	self.mContacts = theContacts;
 	self.mContactsByPhone = theContactsByPhone;
+	
+	@synchronized(self){
+		loadingContacts = NO;
+	}
 	
 	[self performSelectorOnMainThread:@selector(contactsLoaded) withObject:nil waitUntilDone:NO];
 }
