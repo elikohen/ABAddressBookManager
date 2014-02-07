@@ -411,6 +411,7 @@
         dispatch_queue_t currentQueue = dispatch_get_global_queue(0,0);
         
         CFErrorRef error = nil;
+		__weak typeof(self) weakSelf = self;
         addressBook = ABAddressBookCreateWithOptions(NULL,&error);
         ABAddressBookRequestAccessWithCompletion(addressBook, ^(bool granted, CFErrorRef error) {
             // callback can occur in background, address book must be accessed on thread it was created on
@@ -419,10 +420,10 @@
 					CFRelease(addressBook);
                     ios6AdbPermission = NO;
                     //Just call the delegate
-                    [self performSelectorOnMainThread:@selector(contactsPermissionDenied) withObject:nil waitUntilDone:NO];
+                    [weakSelf performSelectorOnMainThread:@selector(contactsPermissionDenied) withObject:nil waitUntilDone:NO];
                 }
                 else {
-                    [self commonInitContactsWithAddressBook:addressBook];
+                    [weakSelf commonInitContactsWithAddressBook:addressBook];
                 }
             });
         });
