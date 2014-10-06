@@ -368,9 +368,9 @@
     
     CFArrayRef arr = ABAddressBookCopyArrayOfAllPeople(addressbook);
 
-    int count = CFArrayGetCount(arr);
+    CFIndex count = CFArrayGetCount(arr);
     
-    for (int x = 0; x < count; x++) {
+    for (CFIndex x = 0; x < count; x++) {
         ABRecordRef rec = CFArrayGetValueAtIndex(arr, x);
         ABRecordID  key = ABRecordGetRecordID(rec);
         
@@ -456,10 +456,10 @@
 	
 	// Order contacts in the way the user want
 	CFRange fullRange = CFRangeMake(0, CFArrayGetCount(peopleMutable));
-	CFArraySortValues(peopleMutable, fullRange, (CFComparatorFunction) ABPersonComparePeopleByName, (void*)mSortOrdering);
+	CFArraySortValues(peopleMutable, fullRange, (CFComparatorFunction) ABPersonComparePeopleByName, (void*)(NSUInteger)mSortOrdering);
 	CFRelease(people);
 	
-	NSNumber *itemsTotal = [NSNumber numberWithInt:CFArrayGetCount(peopleMutable)];
+	NSNumber *itemsTotal = [NSNumber numberWithInteger:CFArrayGetCount(peopleMutable)];
 	
 	NSMutableSet *contactsSet = [[NSMutableSet alloc] init];
 	
@@ -509,7 +509,7 @@
 		}
 		
 		
-		NSNumber *itemsProcessed = [NSNumber numberWithInt:idx+1];
+		NSNumber *itemsProcessed = [NSNumber numberWithInteger:idx+1];
 		ProgressData *pd = [[ProgressData alloc] initWithItemsProcessed:itemsProcessed itemsTotal:itemsTotal andLabel:nil];
 		[self performSelectorOnMainThread:@selector(updateProgress:) withObject:pd waitUntilDone:NO];
 	}

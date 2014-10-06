@@ -182,8 +182,8 @@
     
     CFStringRef aLabel = nil;
     
-    int index;
-    int total = ABMultiValueGetCount(realValue);
+    CFIndex index;
+    CFIndex total = ABMultiValueGetCount(realValue);
     for (index = 0; index < total; index++){
         aLabel = ABMultiValueCopyLabelAtIndex(realValue, index);
         if (aLabel){
@@ -241,8 +241,8 @@
     CFMutableDictionaryRef indexValue = nil;
     CFStringRef aLabel = nil;
     
-    int index;
-    int total = ABMultiValueGetCount(realValue);
+    CFIndex index;
+    CFIndex total = ABMultiValueGetCount(realValue);
     for (index = 0; index < total; index++){
         aLabel = ABMultiValueCopyLabelAtIndex(realValue, index);
         if (aLabel){
